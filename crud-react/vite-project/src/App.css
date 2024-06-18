@@ -1,0 +1,22 @@
+.crud-app{
+    width: 100%;
+}
+
+.crud-app tr{
+    text-align: center;
+}
+
+.crud-app tr:nth-child(even){
+    background: #ddd;
+    
+}
+
+.crud-app td{
+    padding: 16px 0;
+}
+
+.crud-app th{
+    background: orangered;
+    padding: 18px;
+
+}
