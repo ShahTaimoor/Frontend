@@ -3,8 +3,8 @@ import 'remixicon/fonts/remixicon.css'
 import './App.css'
 
 function App() {
-
-  const[open,setOpen] = useState(-550)
+const [edit,setEdit] = useState(null)
+const[open,setOpen] = useState(-550)
 const [students, setStudent] = useState([])
 const [form,setForm] = useState({
   fullname:'',
@@ -31,7 +31,7 @@ setForm({
 
 }
 
-
+ 
 const createStudent = (e)=>{
   e.preventDefault();
   setStudent([
@@ -53,6 +53,32 @@ let deleteStudents = (index)=>{
   setStudent(backup);
 }
 
+let editStudent = (index)=>{
+setOpen(0)
+setForm(students[index])
+setEdit(index)
+}
+
+let saveStudent = (e)=>{
+e.preventDefault()
+const backup = [...students]
+backup[edit] = form
+setStudent(backup)
+setOpen(-550)
+setEdit(null)
+}
+
+let closeDrawer = ()=>{
+  setOpen(-550)
+  setForm({
+  fullname:'',
+  class:'',
+  roll:'',
+  subject:'',
+  Date:''
+})
+setEdit(null)
+}
 
 
 
@@ -94,7 +120,7 @@ let deleteStudents = (index)=>{
                 <td>{item.Date}</td>
             <td>
               <div>
-                <button style={{cursor:'pointer',border:'none,',background:'transparent',fontSize:20}}> <i class="ri-pencil-line"></i></button>
+                <button onClick={()=> editStudent(index)}  style={{cursor:'pointer',border:'none,',background:'transparent',fontSize:20}}> <i class="ri-pencil-line"></i></button>
                 <button onClick={()=> deleteStudents(index)} style={{cursor:'pointer',border:'none,',background:'transparent',fontSize:20}}><i class="ri-delete-bin-5-line"></i></button>
               </div>
             </td>
@@ -115,11 +141,11 @@ let deleteStudents = (index)=>{
         ,background:'white',height:'100%',width:450,boxShadow:'0 0 40px rgba(0,0,0,0.2)'}}>
             
             <button style={{border:'none',background:'transparent',fontSize:'20px', position:'absolute',left:25,top:25,cursor:'pointer'}}
-            onClick={()=>setOpen(-550)}
+            onClick={closeDrawer}
             ><i class="ri-close-circle-line"></i></button>
             <h1>New Student</h1>
             <form 
-            onSubmit={createStudent}
+            onSubmit={edit === null ? createStudent : saveStudent}
             style={{display:'flex',flexDirection:'column', gap:16,}}>
              
               <input
@@ -169,13 +195,20 @@ let deleteStudents = (index)=>{
               
               />
 
-<button 
+{
+  edit === null ? <button 
 style={{border:'none',
   background:'purple',  
   color:'white',fontSize:16,
   padding:'14px 0',cursor:'pointer'}}>Submit</button> 
+  :
 
- <button style={{border:'none',background:'Pink',color:'white',fontSize:16,padding:'14px 0',cursor:'pointer'}}>Save</button>
+ <button style={{border:'none',
+  background:'pink',color:'white',
+  fontSize:16,padding:'14px 0',cursor:'pointer'}}>Save</button>
+}
+
+
 
 
               
