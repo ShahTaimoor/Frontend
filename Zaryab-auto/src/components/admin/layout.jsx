@@ -23,7 +23,11 @@ const Layout = ({children}) => {
             icon:    <i className="ri-shape-line mr-2"></i>,
             link: '/admin/orders'
         },
-{
+        {  label:'Customers',
+            icon:    <i className="ri-tools-line mr-2"></i>,
+            link: '/admin/customers'
+        },
+        {
             label:'Payments',
             icon:    <i className="ri-refund-2-line mr-2"></i>,
             link: '/admin/payments'
@@ -55,7 +59,9 @@ const Layout = ({children}) => {
                 ))
             }
 
-        
+        <button className='text-left px-4 py-3 text-gray-50 text-[17.5px] hover:bg-rose-600 hover:text-white'>
+            Logout
+        </button>
            
            </div>
        </aside>
@@ -106,6 +112,8 @@ const Layout = ({children}) => {
        </section>
     </div>
 
+    
+    
     {/* Mobile */}
 
      <div className='md:hidden block'>                 
@@ -128,6 +136,9 @@ const Layout = ({children}) => {
            </Link>
                 ))
             }
+            <button className='text-left px-4 py-3 text-gray-50 text-[17.5px] hover:bg-rose-600 hover:text-white'>
+            Logout
+        </button>
        </div>
        </aside>
 
