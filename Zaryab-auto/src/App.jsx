@@ -7,7 +7,12 @@ import Dashboard from './components/admin/Dashboard'
 import Customer from './components/admin/Customer'
 import Payment from './components/admin/Payment'
 import Setting from './components/admin/Setting'
-
+import Home from './components/Home'
+import Product from './components/Products'
+import Category from './components/Category'
+import Login from './components/Login'
+import Signup from './components/Signup'
+import Contact from './components/Contact'
 function App() {
  
   return (
@@ -15,6 +20,15 @@ function App() {
     
      <BrowserRouter>
        <Routes>
+<Route path='/' element={<Home/>}/>
+<Route path='/products' element={<Product/>}/>
+<Route path='/category' element={<Category/>}/>
+<Route path='/login' element={<Login/>}/>
+<Route path='/signup' element={<Signup/>}/>
+<Route path='/contact-us' element={<Contact/>}/>
+
+
+
 
      <Route path='/admin'> 
            <Route path='products' element={< Products/>}/>
