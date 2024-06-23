@@ -9,6 +9,7 @@ import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 
 const Home = () => {
+  
   const [products , setProducts] = useState([
      
     {
@@ -58,14 +59,16 @@ const Home = () => {
   return (
     <Layout>
       <div>
-        <header>
+        <header
+    >
           <Swiper 
+            
             spaceBetween={30}
             pagination={{
               dynamicBullets: true,
             }}
             modules={[Pagination]}
-            className="mySwiper"
+            className="mySwiper z-[-1]"
           >
             <SwiperSlide className="mb-5 bg-red-500" >
               <img src="/images/hero.jpg" alt="" className=""/>

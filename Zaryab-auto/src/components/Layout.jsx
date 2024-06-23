@@ -1,8 +1,21 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Link,useNavigate } from "react-router-dom"
-
+import { getAuth, onAuthStateChanged,signOut } from "firebase/auth"
+import app from "../util/firebase-config"
+const auth = getAuth(app)
 
 const Layout = ({children}) => {
+  const [menu,setMenu] = useState(false)
+  const [session,setSession] = useState(null)
+  useEffect(()=>{
+    onAuthStateChanged(auth, (user)=>{
+      if (user) {
+        setSession(user)
+      }else{
+  setSession(false)
+      }
+    })
+  },[])
   const menus = [
     {
         label:'Home',
@@ -27,7 +40,23 @@ const Layout = ({children}) => {
     navigate(e)
   }
   const [open,setOpen] = useState(false)
+    
+
+  if (session === null) {
     return (
+    <div className="bg-gray-100 h-full fixed top-0 left-0 w-full flex justify-center items-center">
+<span className="relative flex h-3 w-3">
+  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+  <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+</span>
+
+    </div>
+  )
+  }
+  
+  
+  
+  return (
     <div>
 
       
@@ -57,10 +86,10 @@ const Layout = ({children}) => {
           <button  className="text-2xl md:hidden flex" onClick={()=> setOpen(!open)}>
             {
             open === false ?
-            <i class="ri-menu-2-line"></i>
+            <i className="ri-menu-2-line"></i>
 
             :
-            <i class="ri-close-circle-line"></i>
+            <i className="ri-close-circle-line"></i>
             }
             </button>
            
@@ -75,8 +104,34 @@ const Layout = ({children}) => {
                     </li>
                 ))
             }
-            <Link to={'/login'} className="py-6 block text-center hover:bg-blue-500 w-[100px]">Login</Link>
-             <Link to={'/signup'} className="py-6 block text-center hover:bg-blue-500 w-[100px]">SignUp</Link>
+
+       {
+        !session && <>
+        
+        <Link to={'/login'} className="py-6 block text-center hover:bg-blue-500 w-[100px]">Login</Link>
+        <Link to={'/signup'} className="py-6 block text-center hover:bg-blue-500 w-[100px]">SignUp</Link>
+        
+        </>
+       }
+       {
+        session &&  <button className="relative" onClick={()=>setMenu(!menu)}>
+          <img src="/images/signup.svg" alt="" className="w-10 h-10 rounded-full"/>
+          
+          {
+            menu &&
+          <div className=" flex flex-col gap-2 items-start w-[150px] py-3  bg-white z-50 absolute top-12 right-0">
+            
+            <Link className="hover:bg-gray-300 w-full p-2 text-left" to={'/profile'}>My Profile</Link>
+           <Link className="hover:bg-gray-300 w-full p-2 text-left" to={'/cart'}>Cart</Link>
+            
+             <button className="hover:bg-gray-300 w-full p-2 text-left" onClick={()=>signOut(auth)}>Logout</button>
+          </div>
+          }          
+
+        
+        </button>
+       }
+
            </ul>
          </div>
       </nav>

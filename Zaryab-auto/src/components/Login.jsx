@@ -1,6 +1,25 @@
- import { Link } from "react-router-dom"
+ import { useState } from "react"
+import { Link } from "react-router-dom"
 const Login = () => {
+    const [form,setForm] = useState({
+        email:'',
+        password:''
+    }) 
+   const login = (e)=>{
+   e.preventDefault()
    
+   }
+
+   const handleOnChange = (e)=>{
+    const input = e.target   
+   const value = input.value
+   const key = input.name
+   setForm({
+    ...form,
+    [key] : value
+   })
+
+   }
   return (
 
     <div className="grid md:grid-cols-2 md:h-screen md:overflow-hidden">
@@ -8,12 +27,15 @@ const Login = () => {
         <div className="flex flex-col justify-center p-8 md:p-16">
             <h1 className="text-4xl font-bold mb-3">Sign in</h1>
             <p className="text-lg text-gray-600">Enter Profile Details</p>
-        
-        <form className="mt-8 space-y-4">
+        {
+            JSON.stringify(form)
+        }
+        <form className="mt-8 space-y-4" onSubmit={login}>
             
             <div className="flex flex-col">
                 <label className="mb-1 text-lg font-semibold ">Email</label>
                 <input 
+                onChange={handleOnChange}
                 name="email"
                 required
                 placeholder="Your Email"
