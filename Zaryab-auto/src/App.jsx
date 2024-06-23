@@ -13,6 +13,7 @@ import Category from './components/Category'
 import Login from './components/Login'
 import Signup from './components/Signup'
 import Contact from './components/Contact'
+import PreGuard from './components/Guard/PreGuard'
 function App() {
  
   return (
@@ -23,8 +24,12 @@ function App() {
 <Route path='/' element={<Home/>}/>
 <Route path='/products' element={<Product/>}/>
 <Route path='/category' element={<Category/>}/>
+<Route element={<PreGuard/>}>
 <Route path='/login' element={<Login/>}/>
 <Route path='/signup' element={<Signup/>}/>
+</Route>
+
+
 <Route path='/contact-us' element={<Contact/>}/>
 
 
