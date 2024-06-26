@@ -1,15 +1,18 @@
 import Layout from "./Layout";
-import React, { useRef, useState } from "react";
-
+import React, { useState,useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-
 import "swiper/css";
 import "swiper/css/pagination";
-
 import { Pagination } from "swiper/modules";
 
+import app from "../util/firebase-config";
+import { getFirestore , collection, addDoc } from "firebase/firestore";
+import { onAuthStateChanged,getAuth } from "firebase/auth";
+const db = getFirestore(app)
+const auth = getAuth(app)
+
 const Home = () => {
-  
+  const [session,setSession] = useState(null)
   const [products , setProducts] = useState([
      
     {
@@ -54,8 +57,27 @@ const Home = () => {
       disc:15,
       thumbnail:'/images/products/p7.jpeg'
     }
-
   ])
+useEffect(()=>{
+ onAuthStateChanged(auth,(user)=>{
+  if (user) {
+    setSession(user)
+  }else{
+    setSession(false)
+  }
+ })
+},[])
+
+     const addToCart = async (item)=>{
+      try{
+        item.userId = session.uid
+        await addDoc(collection(db,'carts'),item)
+      } catch(err){
+console.log(err);
+      }    
+    }
+
+
   return (
     <Layout>
       <div>
@@ -98,7 +120,7 @@ const Home = () => {
                                 <label>{item.disc}%</label>
                               </div>
                               <button className="w-full py-2 bg-green-500 mt-2 rounded">Buy Now</button>
-                               <button className="w-full py-2 bg-rose-500 mt-2 rounded">Add To Cart</button>
+                               <button onClick={()=>addToCart(item)} className="w-full py-2 bg-rose-500 mt-2 rounded">Add To Cart</button>
 
                             </div>
                         </div>

@@ -66,6 +66,26 @@ const Layout = ({children}) => {
           transition: '0.3s'
         }}>
     <div className="flex flex-col  gap-8 ">
+      {
+          session &&  <button className="relative mt-10 ml-10" onClick={()=>setMenu(!menu)}>
+         <div className="flex items-center gap-3 overflow-hidden"> 
+          <img src="/images/signup.svg" alt="" className="w-10 h-10 rounded-full"/>
+          <p className="capitalize text-white">{session.displayName}</p>
+         </div>
+          {
+            menu &&
+          <div className=" flex flex-col gap-2 items-start w-[150px] py-3  bg-white z-50 absolute top-12 left-0">
+            
+            <Link className="hover:bg-gray-300 w-full p-2 text-left" to={'/profile'}>My Profile</Link>
+           <Link className="hover:bg-gray-300 w-full p-2 text-left" to={'/cart'}>Cart</Link>
+            
+             <button className="hover:bg-gray-300 w-full p-2 text-left" onClick={()=>signOut(auth)}>Logout</button>
+          </div>
+          }          
+
+        
+        </button>
+      }
        {
                 menus.map((item,index)=>(
                     
@@ -115,7 +135,7 @@ const Layout = ({children}) => {
        }
        {
         session &&  <button className="relative" onClick={()=>setMenu(!menu)}>
-          <img src="/images/signup.svg" alt="" className="w-10 h-10 rounded-full"/>
+          <img src={session.photoURL} alt="" className="w-10 h-10 rounded-full"/>
           
           {
             menu &&

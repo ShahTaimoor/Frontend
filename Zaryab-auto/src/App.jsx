@@ -14,6 +14,8 @@ import Login from './components/Login'
 import Signup from './components/Signup'
 import Contact from './components/Contact'
 import PreGuard from './components/Guard/PreGuard'
+import Cart from './components/Cart'
+import Profile from './components/Profile'
 function App() {
  
   return (
@@ -24,6 +26,8 @@ function App() {
 <Route path='/' element={<Home/>}/>
 <Route path='/products' element={<Product/>}/>
 <Route path='/category' element={<Category/>}/>
+<Route path='/cart' element={<Cart/>}/>
+<Route path='/profile' element={<Profile/>}/>
 <Route element={<PreGuard/>}>
 <Route path='/login' element={<Login/>}/>
 <Route path='/signup' element={<Signup/>}/>
